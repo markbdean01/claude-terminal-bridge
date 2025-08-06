@@ -8,9 +8,9 @@
 
 ## Overview
 
-The Claude Terminal Bridge is a revolutionary web-based terminal interface that provides real-time interaction with Claude Code running in a tmux session. Originally designed to solve iOS Progressive Web App (PWA) iframe restrictions, it now serves as a powerful, cross-platform solution for mobile coding with Claude Code.
+The Claude Terminal Bridge is a web-based terminal interface that provides real-time interaction with Claude Code running in a tmux session. Originally designed to solve iOS Progressive Web App (PWA) iframe restrictions, it is cross-platform solution for mobile coding with Claude Code.
 
-**Perfect for:** Live coding on iPhone, Raspberry Pi development, boat automation, IoT projects, and anywhere you need terminal access to Claude Code from a mobile device.
+**Perfect for:** Live coding on iPhone, Raspberry Pi development, and anywhere you need terminal access to Claude Code from a mobile device.
 
 ## ✨ Key Features
 
