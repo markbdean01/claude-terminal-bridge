@@ -63,8 +63,17 @@ Imagine you have a **Raspberry Pi running Claude Code** in your home network, co
 1. **From your iPhone**, anywhere in the world, you connect through Tailscale to your Pi
 2. **Open this terminal interface** and tell Claude Code: *"Build me a Python Flask app that does X, and make it work on iPhone exactly like this terminal app"*
 3. **Claude Code builds the app around itself** - creating new features and interfaces
-4. **Walking down the street**, you decide to add a feature and tell Claude Code through this terminal
+4. **Walking down the street**, you decide to add a feature and **speak directly to your phone** using iOS speech-to-text - no typing required
 5. **The feature magically appears** in your app ecosystem
+
+### The Speech-to-Text Reality
+What makes this particularly interesting is that you can literally **develop by talking**. Using iPhone's speech-to-text, you can:
+- Walk down the street and say "Add a weather widget to the home screen"
+- Dictate complex code requirements while commuting
+- Debug issues by describing what you're seeing verbally
+- Refine features through natural conversation with Claude Code
+
+No keyboard, no laptop - just your voice and your phone creating real applications.
 
 ### Why This Is Revolutionary
 - **Self-modifying system** - The AI agent builds and modifies its own environment
@@ -419,6 +428,44 @@ This project enables a fascinating recursive development pattern:
 5. **Developer becomes conductor** rather than coder
 
 This represents a fundamental shift from **writing code** to **directing intelligent agents** in a self-improving development ecosystem.
+
+## 🗣️ A Practical Example: Building Your First App
+
+Here's how you might actually use this in practice:
+
+### Day 1: Setup
+1. Install this terminal bridge on your Raspberry Pi
+2. Add it to your iPhone home screen as a PWA
+3. Test the connection through Tailscale
+
+### Day 2: Voice-Driven Development
+**Walking to the coffee shop**, you open the terminal and speak to your phone:
+
+*"Claude, I want to build a simple todo app. Create a new Flask route at /todo that shows a list of tasks. Make it look good on iPhone like this terminal interface."*
+
+Claude Code builds the foundation. You now have:
+- Terminal Bridge (Menu item 1)
+- Todo App (Menu item 2)
+
+### Day 3: Adding Features
+**On your lunch break**, you switch to the terminal tab and say:
+
+*"Add the ability to mark tasks as complete with a checkbox. Also add a way to delete tasks."*
+
+You refresh your todo app tab - the features are there.
+
+### Day 4: Polish
+**While waiting for the bus**:
+
+*"Make the todo app use the same VS Code light theme colors as this terminal. Also add a due date field to each task."*
+
+### The Result
+In a few days of casual conversation with your phone, you've built a fully functional web app that runs on your private network, accessible from anywhere via Tailscale. No traditional coding required - just describing what you want while going about your day.
+
+### The Broader Insight
+This isn't just about avoiding typing. It's about **removing the friction** between having an idea and seeing it implemented. When development becomes as easy as talking to your phone, the barrier between thought and creation essentially disappears.
+
+The interesting observation is that you're not really "programming" anymore - you're **collaborating with an AI** that understands your intent and handles the technical implementation. Your role shifts from coder to product owner, having conversations about features rather than debugging syntax errors.
 
 ## 🤝 Contributing
 
