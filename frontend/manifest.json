@@ -6,8 +6,8 @@
   "start_url": "/terminal",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "theme_color": "#1e1e1e",
-  "background_color": "#1e1e1e",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "scope": "/",
   "categories": [
     "developer",

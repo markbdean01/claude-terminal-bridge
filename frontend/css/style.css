@@ -1,4 +1,38 @@
-/* Claude Terminal Bridge - Complete Stylesheet */
+/* Claude Terminal Bridge - Complete Stylesheet with VS Code Light Theme */
+
+/* VS Code Default Light Modern Theme Colors */
+:root {
+    /* Terminal Colors (Custom Settings) */
+    --terminal-background: #ffffff; /* White background */
+    --terminal-foreground: #000000; /* Black text */
+    --terminal-ansi-black: #000000; /* Pure black */
+    --terminal-ansi-white: #ffffff; /* Pure white */
+    --terminal-ansi-bright-black: #666666; /* Dark gray */
+    --terminal-ansi-bright-white: #cccccc; /* Light gray */
+
+    /* Default Light Modern Theme Colors */
+    --background: #ffffff; /* Main background */
+    --foreground: #000000; /* Primary text */
+    --secondary-foreground: #616161; /* Secondary text */
+    --border: #e5e5e5; /* Borders */
+    --hover: #f3f3f3; /* Hover states */
+    --selection: #0078d4; /* Selection blue */
+    --selection-background: #e3f2fd; /* Selection background */
+
+    /* Status Colors */
+    --success: #16a085; /* Success green */
+    --warning: #f39c12; /* Warning orange */
+    --error: #e74c3c; /* Error red */
+    --info: #3498db; /* Info blue */
+
+    /* UI Elements */
+    --button-primary: #0078d4; /* Primary button */
+    --button-primary-hover: #106ebe; /* Primary button hover */
+    --button-secondary: #f3f3f3; /* Secondary button */
+    --input-background: #ffffff; /* Input fields */
+    --input-border: #cccccc; /* Input borders */
+    --scrollbar: #c1c1c1; /* Scrollbars */
+}
 
 /* Reset and base styles */
 * {
@@ -8,28 +42,48 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #1e1e1e;
-    color: #d4d4d4;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Consolas', 'Courier New', monospace;
+    height: 100vh;
+    height: -webkit-fill-available; /* PWA fix for iPhone */
+    max-height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
-    height: 100vh;
     overflow: hidden;
-    line-height: 1.4;
+    position: fixed; /* PWA fix */
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
-/* Header styling */
+/* Header styling with theme variables */
 #header {
-    background: linear-gradient(135deg, #2d2d2d 0%, #262626 100%);
-    padding: 12px 16px;
+    background: var(--hover);
+    padding: 8px 16px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #444;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--secondary-foreground);
+    gap: 10px;
     min-height: 60px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .header-left {
@@ -47,31 +101,33 @@ body {
 .header-title {
     font-size: 16px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--foreground);
 }
 
-/* Button styles */
+/* Button styles using theme variables */
 .menu-btn, .font-btn, .escape-btn, .send-btn {
-    background: #404040;
-    border: 1px solid #555;
-    color: #d4d4d4;
+    background: var(--button-secondary);
+    border: 1px solid var(--border);
+    color: var(--foreground);
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 500;
 }
 
 .menu-btn:hover, .font-btn:hover {
-    background: #4a4a4a;
-    border-color: #666;
+    background: var(--hover);
+    border-color: var(--border);
 }
 
 .menu-btn:active, .font-btn:active {
-    background: #3a3a3a;
+    background: var(--button-secondary);
     transform: translateY(1px);
 }
 
@@ -88,14 +144,14 @@ body {
     font-weight: bold;
 }
 
-/* Status indicator */
+/* Status indicator with theme support */
 .status {
     font-size: 12px;
     padding: 6px 12px;
     border-radius: 20px;
-    background: #444;
-    color: #999;
-    border: 1px solid #555;
+    background: var(--button-secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--border);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -107,57 +163,73 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #666;
+    background: var(--secondary-foreground);
     display: inline-block;
 }
 
 .status.connected {
-    background: #0d6e0d;
-    color: #90ee90;
-    border-color: #0f7b0f;
+    background: var(--success);
+    color: #ffffff;
+    border-color: var(--success);
 }
 
 .status.connected::before {
-    background: #00ff00;
-    box-shadow: 0 0 6px #00ff00;
+    background: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
 }
 
 .status.error {
-    background: #8b0000;
-    color: #ffcccb;
-    border-color: #a00000;
+    background: var(--error);
+    color: #ffffff;
+    border-color: var(--error);
 }
 
 .status.error::before {
-    background: #ff0000;
-    box-shadow: 0 0 6px #ff0000;
+    background: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
 }
 
-/* Terminal container - critical for scrolling */
+/* Terminal container with proper scrolling */
 #terminal-container {
     flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    background: #1e1e1e;
+    background: var(--terminal-background);
     position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
     min-height: 0;
-    scroll-behavior: smooth;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
 }
 
-/* Terminal output styling */
+/* VS Code style scrollbars */
+#terminal-container::-webkit-scrollbar {
+    width: 12px;
+    background: var(--background);
+}
+
+#terminal-container::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+    border-radius: 6px;
+}
+
+#terminal-container::-webkit-scrollbar-thumb:hover {
+    background: #999999;
+}
+
+/* Terminal output with theme colors */
 #terminal-output {
-    font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
-    font-size: 14px;
-    line-height: 1.5;
     padding: 16px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
     white-space: pre-wrap;
     word-wrap: break-word;
-    -webkit-user-select: text;
-    user-select: text;
-    -webkit-touch-callout: default;
+    background: var(--terminal-background);
+    color: var(--terminal-foreground);
     min-height: 100%;
-    color: #d4d4d4;
 }
 
 /* Loading indicator */
@@ -166,51 +238,58 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #888;
+    color: var(--secondary-foreground);
     font-size: 14px;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* Input container */
-#input-container {
-    background: linear-gradient(135deg, #2d2d2d 0%, #262626 100%);
-    padding: 12px 16px;
-    display: flex;
-    gap: 12px;
-    border-top: 1px solid #444;
-    min-height: 64px;
-    align-items: center;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+#loading-indicator.hidden {
+    display: none;
 }
 
+/* Input container with theme styling */
+#input-container {
+    background: var(--background);
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid var(--border);
+    align-items: center;
+    min-height: 56px;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Input field styling */
 #command-input {
     flex: 1;
-    background: #333;
-    border: 1px solid #555;
-    color: #fff;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 16px; /* Prevents iOS zoom */
-    font-family: inherit;
+    background: var(--input-background);
+    color: var(--terminal-foreground);
+    border: 1px solid var(--input-border);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    height: 36px;
+    line-height: 1;
+    transition: border-color 0.2s;
     outline: none;
-    transition: all 0.2s ease;
 }
 
 #command-input:focus {
-    border-color: #007acc;
+    border-color: var(--selection);
     box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
-    background: #363636;
 }
 
 #command-input::placeholder {
-    color: #888;
+    color: var(--secondary-foreground);
 }
 
 .escape-btn {
-    background: #dc3545;
-    border-color: #c82333;
+    background: var(--error);
+    border-color: var(--error);
     color: white;
     min-width: 50px;
     height: 44px;
@@ -219,7 +298,7 @@ body {
 
 .escape-btn:hover {
     background: #c82333;
-    border-color: #bd2130;
+    border-color: #c82333;
 }
 
 .escape-btn:active {
@@ -228,16 +307,16 @@ body {
 }
 
 .send-btn {
-    background: #007acc;
-    border-color: #0066a3;
+    background: var(--button-primary);
+    border-color: var(--button-primary);
     color: white;
     min-width: 50px;
     height: 44px;
 }
 
 .send-btn:hover {
-    background: #0066a3;
-    border-color: #005580;
+    background: var(--button-primary-hover);
+    border-color: var(--button-primary-hover);
 }
 
 .send-btn:active {
@@ -245,14 +324,14 @@ body {
     transform: translateY(1px);
 }
 
-/* Side menu styling */
+/* Side menu styling with theme support */
 #menu-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
@@ -270,13 +349,13 @@ body {
     left: -300px;
     width: 300px;
     height: 100%;
-    background: #2d2d2d;
-    border-right: 1px solid #444;
+    background: var(--background);
+    border-right: 1px solid var(--border);
     z-index: 1001;
     transition: left 0.3s ease;
     display: flex;
     flex-direction: column;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #side-menu.active {
@@ -284,16 +363,16 @@ body {
 }
 
 .menu-header {
-    background: #333;
+    background: var(--hover);
     padding: 20px;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .menu-header h3 {
-    color: #fff;
+    color: var(--foreground);
     font-size: 18px;
     margin: 0;
 }
@@ -301,7 +380,7 @@ body {
 .menu-header button {
     background: none;
     border: none;
-    color: #ccc;
+    color: var(--secondary-foreground);
     font-size: 18px;
     cursor: pointer;
     padding: 4px;
@@ -310,7 +389,7 @@ body {
 }
 
 .menu-header button:hover {
-    background: #444;
+    background: var(--button-secondary);
 }
 
 .menu-content {
@@ -324,7 +403,7 @@ body {
 }
 
 .menu-section h4 {
-    color: #ccc;
+    color: var(--secondary-foreground);
     font-size: 14px;
     margin-bottom: 15px;
     text-transform: uppercase;
@@ -335,7 +414,7 @@ body {
     width: 100%;
     background: none;
     border: none;
-    color: #d4d4d4;
+    color: var(--foreground);
     padding: 12px 16px;
     text-align: left;
     cursor: pointer;
@@ -349,12 +428,12 @@ body {
 }
 
 .menu-item:hover {
-    background: #3a3a3a;
+    background: var(--hover);
 }
 
 .menu-item i {
     width: 16px;
-    color: #888;
+    color: var(--secondary-foreground);
 }
 
 .setting-item {
@@ -362,7 +441,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #3a3a3a;
+    border-bottom: 1px solid var(--border);
 }
 
 .setting-item:last-child {
@@ -370,18 +449,18 @@ body {
 }
 
 .setting-item label {
-    color: #d4d4d4;
+    color: var(--foreground);
     font-size: 14px;
 }
 
 .setting-item input[type="checkbox"] {
     width: 18px;
     height: 18px;
-    accent-color: #007acc;
+    accent-color: var(--selection);
 }
 
 .about-text {
-    color: #999;
+    color: var(--secondary-foreground);
     font-size: 13px;
     line-height: 1.5;
 }
@@ -391,7 +470,7 @@ body {
 }
 
 .about-text a {
-    color: #007acc;
+    color: var(--selection);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -402,43 +481,47 @@ body {
     text-decoration: underline;
 }
 
-/* Connection toast */
+/* Utility classes */
+.hidden {
+    display: none !important;
+}
+
+/* Connection toast with theme support */
 #connection-toast {
     position: fixed;
     bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
-    background: #333;
-    color: #fff;
+    background: var(--background);
+    color: var(--foreground);
     padding: 12px 20px;
     border-radius: 24px;
-    border: 1px solid #555;
+    border: 1px solid var(--border);
     display: flex;
     align-items: center;
     gap: 8px;
     z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     animation: slideUp 0.3s ease;
 }
 
-/* ANSI color classes */
-.ansi-black { color: #555555; }
-.ansi-red { color: #ff5555; }
-.ansi-green { color: #50fa7b; }
-.ansi-yellow { color: #f1fa8c; }
-.ansi-blue { color: #8be9fd; }
-.ansi-magenta { color: #ff79c6; }
-.ansi-cyan { color: #8be9fd; }
-.ansi-white { color: #f8f8f2; }
-
-.ansi-bright-black { color: #6272a4; }
-.ansi-bright-red { color: #ff6e6e; }
-.ansi-bright-green { color: #69ff94; }
-.ansi-bright-yellow { color: #ffffa5; }
-.ansi-bright-blue { color: #d6acff; }
-.ansi-bright-magenta { color: #ff92df; }
-.ansi-bright-cyan { color: #a4ffff; }
-.ansi-bright-white { color: #ffffff; }
+/* ANSI color classes for light theme */
+.ansi-black { color: var(--terminal-ansi-black); }
+.ansi-red { color: #cd3131; }
+.ansi-green { color: #00bc00; }
+.ansi-yellow { color: #949800; }
+.ansi-blue { color: #0451a5; }
+.ansi-magenta { color: #bc05bc; }
+.ansi-cyan { color: #0598bc; }
+.ansi-white { color: var(--terminal-ansi-white); }
+.ansi-bright-black { color: var(--terminal-ansi-bright-black); }
+.ansi-bright-red { color: #f14c4c; }
+.ansi-bright-green { color: #00c900; }
+.ansi-bright-yellow { color: #a8a800; }
+.ansi-bright-blue { color: #0067c7; }
+.ansi-bright-magenta { color: #d670d6; }
+.ansi-bright-cyan { color: #06b6d4; }
+.ansi-bright-white { color: var(--terminal-ansi-bright-white); }
 
 /* Background colors */
 .ansi-bg-black { background-color: #000000; }

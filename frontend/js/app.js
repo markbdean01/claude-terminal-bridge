@@ -19,6 +19,10 @@ class ClaudeTerminal {
         this.connectionAttempts = 0;
         this.isConnected = false;
         
+        // Typing detection state
+        this.isTyping = false;
+        this.typingTimer = null;
+        
         // Settings
         this.autoScroll = true;
         this.soundEnabled = false;
@@ -94,12 +98,37 @@ class ClaudeTerminal {
      * Setup event listeners
      */
     setupEventListeners() {
-        // Input handling
+        // Input handling with typing detection
         this.input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 this.sendCommand();
+                return;
             }
+            
+            // Don't mark as typing for certain keys
+            if (e.key === 'Tab' || e.key === 'Escape' || e.key === 'F1' || 
+                e.key === 'F2' || e.key === 'F3' || e.key === 'F4' || 
+                e.key === 'F5' || e.key === 'F6' || e.key === 'F7' || 
+                e.key === 'F8' || e.key === 'F9' || e.key === 'F10' || 
+                e.key === 'F11' || e.key === 'F12' || e.ctrlKey || e.metaKey || e.altKey) {
+                return;
+            }
+            
+            // Mark as typing for other keys
+            this.setTyping(true);
+        });
+        
+        // Typing detection for input events (captures paste, etc.)
+        this.input.addEventListener('input', () => {
+            this.setTyping(true);
+        });
+        
+        // When input loses focus, ensure typing flag is cleared
+        this.input.addEventListener('blur', () => {
+            this.setTyping(false);
+            // Force an immediate poll to catch up
+            setTimeout(() => this.pollOutput(), 100);
         });
         
         // Settings checkboxes
@@ -229,10 +258,38 @@ class ClaudeTerminal {
     }
     
     /**
-     * Poll for terminal output
+     * Set typing state with timer management
+     */
+    setTyping(typing) {
+        this.isTyping = typing;
+        
+        // Clear existing timer
+        if (this.typingTimer) {
+            clearTimeout(this.typingTimer);
+            this.typingTimer = null;
+        }
+        
+        if (typing) {
+            // Set timer to reset typing flag after 1500ms of inactivity
+            this.typingTimer = setTimeout(() => {
+                this.isTyping = false;
+                // Add small delay before resuming polling
+                setTimeout(() => this.pollOutput(), 200);
+            }, 1500);
+        }
+    }
+    
+    /**
+     * Poll for terminal output with typing detection
      */
     async pollOutput() {
         if (this.isPolling) return;
+        
+        // Skip polling only if actively typing
+        if (this.isTyping) {
+            return;
+        }
+        
         this.isPolling = true;
         
         try {
@@ -448,7 +505,9 @@ class ClaudeTerminal {
      * Show loading indicator
      */
     showLoading(show) {
-        this.loadingIndicator.style.display = show ? 'flex' : 'none';
+        if (this.loadingIndicator) {
+            this.loadingIndicator.classList.toggle('hidden', !show);
+        }
     }
     
     /**
@@ -461,10 +520,10 @@ class ClaudeTerminal {
         if (toast && messageEl) {
             messageEl.textContent = message;
             toast.className = `toast-${type}`;
-            toast.style.display = 'flex';
+            toast.classList.remove('hidden');
             
             setTimeout(() => {
-                toast.style.display = 'none';
+                toast.classList.add('hidden');
             }, CONFIG.toastDuration);
         }
         

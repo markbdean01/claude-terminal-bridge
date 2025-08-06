@@ -42,6 +42,37 @@ class ANSIParser {
     }
     
     /**
+     * Get 256-color palette color
+     * @param {number} num - Color number (0-255)
+     * @returns {string} RGB color string
+     */
+    get256Color(num) {
+        // Basic 16 colors - optimized for light theme
+        if (num < 16) {
+            const basicColors = [
+                '#000000', '#cd3131', '#00bc00', '#949800',  // Light theme colors
+                '#0451a5', '#bc05bc', '#0598bc', '#ffffff',
+                '#666666', '#f14c4c', '#00c900', '#a8a800',  // Bright variants
+                '#0067c7', '#d670d6', '#06b6d4', '#cccccc'
+            ];
+            return basicColors[num];
+        }
+        // 216 color cube
+        else if (num < 232) {
+            const i = num - 16;
+            let r = Math.floor(i / 36) * 51;
+            let g = Math.floor((i % 36) / 6) * 51;
+            let b = (i % 6) * 51;
+            return `rgb(${r},${g},${b})`;
+        }
+        // Grayscale
+        else {
+            const gray = (num - 232) * 10 + 8;
+            return `rgb(${gray},${gray},${gray})`;
+        }
+    }
+    
+    /**
      * Parse ANSI escape sequences and convert to HTML
      * @param {string} text - Raw text with ANSI codes
      * @returns {string} HTML with ANSI codes converted to CSS classes
@@ -91,12 +122,74 @@ class ANSIParser {
      * @returns {string} HTML with ANSI codes converted
      */
     parseAnsiCodes(html) {
-        // ANSI escape sequence regex: \x1b[...m
-        const ansiRegex = /\x1b\[([0-9;]+)m/g;
+        // Stack to track open spans
+        let openSpans = 0;
         
-        return html.replace(ansiRegex, (match, codes) => {
-            return this.processAnsiCodes(codes);
+        // Replace ANSI codes with HTML
+        html = html.replace(/\x1b\[([0-9;]+)m/g, (match, codes) => {
+            const codeArray = codes.split(';');
+            let result = '';
+            
+            for (let i = 0; i < codeArray.length; i++) {
+                const code = parseInt(codeArray[i]);
+                
+                // Close any open spans on reset
+                if (code === 0) {
+                    while (openSpans > 0) {
+                        result += '</span>';
+                        openSpans--;
+                    }
+                    continue;
+                }
+                
+                // Text attributes
+                if (code === 1) { result += '<span class="ansi-bold">'; openSpans++; }
+                else if (code === 4) { result += '<span class="ansi-underline">'; openSpans++; }
+                
+                // 256-color support
+                else if (code === 38 && codeArray[i+1] === '5') {
+                    // Foreground 256 color
+                    const colorNum = parseInt(codeArray[i+2]);
+                    const color = this.get256Color(colorNum);
+                    result += `<span style="color: ${color}">`;
+                    openSpans++;
+                    i += 2; // Skip the next two codes
+                }
+                else if (code === 48 && codeArray[i+1] === '5') {
+                    // Background 256 color - DISABLED for readability
+                    i += 2; // Skip but don't apply
+                }
+                
+                // Standard colors 30-37
+                else if (code >= 30 && code <= 37) {
+                    const colors = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'];
+                    result += `<span class="ansi-${colors[code - 30]}">`;
+                    openSpans++;
+                }
+                
+                // Bright foreground colors 90-97
+                else if (code >= 90 && code <= 97) {
+                    const colors = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'];
+                    result += `<span class="ansi-bright-${colors[code - 90]}">`;
+                    openSpans++;
+                }
+            }
+            
+            return result;
         });
+        
+        // Remove other ANSI codes we don't handle
+        html = html.replace(/\x1b\[[0-9;]*[A-HJKSTfmsu]/g, '');
+        html = html.replace(/\x1b\[?[0-9;]*[hl]/g, '');
+        html = html.replace(/\x1b\][0-9];[^\x07\x1b]*(\x07|\x1b\\)/g, ''); // OSC sequences
+        
+        // Close any remaining open spans
+        while (openSpans > 0) {
+            html += '</span>';
+            openSpans--;
+        }
+        
+        return html;
     }
     
     /**

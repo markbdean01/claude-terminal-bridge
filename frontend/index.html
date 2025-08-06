@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Claude Terminal">
-    <meta name="theme-color" content="#1e1e1e">
+    <meta name="theme-color" content="#ffffff">
     <meta name="description" content="Web-based terminal for Claude Code with mobile PWA support">
     
     <title>Claude Code Terminal</title>
@@ -28,15 +28,15 @@
 <body>
     <!-- Header with menu button, title, font controls, and status -->
     <div id="header">
-        <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="header-left">
             <button class="menu-btn" onclick="openMenu()" aria-label="Open menu">
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="header-title">Claude Code Terminal</div>
+            <div>Claude Code Terminal</div>
         </div>
-        <div style="display: flex; gap: 8px; align-items: center;">
-            <button class="font-btn" onclick="adjustFontSize(-1)" aria-label="Decrease font size">A-</button>
-            <button class="font-btn" onclick="adjustFontSize(1)" aria-label="Increase font size">A+</button>
+        <div class="header-right">
+            <button onclick="adjustFontSize(-1)">A-</button>
+            <button onclick="adjustFontSize(1)">A+</button>
             <div class="status" id="status">Connecting...</div>
         </div>
     </div>
@@ -44,7 +44,7 @@
     <!-- Terminal output container -->
     <div id="terminal-container">
         <div id="terminal-output"></div>
-        <div id="loading-indicator" style="display: none;">
+        <div id="loading-indicator" class="hidden">
             <i class="fas fa-spinner fa-spin"></i> Loading...
         </div>
     </div>
@@ -60,10 +60,8 @@
                spellcheck="false" 
                enterkeyhint="send"
                aria-label="Command input">
-        <button class="escape-btn" onclick="sendEscape()" aria-label="Send escape key">ESC</button>
-        <button class="send-btn" onclick="sendCommand()" aria-label="Send command">
-            <i class="fas fa-paper-plane"></i>
-        </button>
+        <button onclick="sendEscape()" class="escape-btn">ESC</button>
+        <button onclick="sendCommand()">Send</button>
     </div>
     
     <!-- Side drawer menu (hidden by default) -->
@@ -106,7 +104,7 @@
                 <div class="about-text">
                     <p>Claude Terminal Bridge v1.0</p>
                     <p>Mobile-optimized terminal interface for Claude Code</p>
-                    <p><a href="https://github.com/yourusername/claude-terminal-bridge" target="_blank">
+                    <p><a href="https://github.com/yourusername/claude-terminal-bridge" target="_blank" rel="noopener">
                         <i class="fas fa-external-link-alt"></i> GitHub Repository
                     </a></p>
                 </div>
@@ -115,7 +113,7 @@
     </nav>
     
     <!-- Connection status toast -->
-    <div id="connection-toast" style="display: none;">
+    <div id="connection-toast" class="hidden">
         <i class="fas fa-wifi"></i>
         <span id="toast-message">Reconnecting...</span>
     </div>
