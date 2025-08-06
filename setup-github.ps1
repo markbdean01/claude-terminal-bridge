@@ -9,7 +9,8 @@ Write-Host ""
 $githubDesktopPath = "$env:LOCALAPPDATA\GitHubDesktop\GitHubDesktop.exe"
 if (Test-Path $githubDesktopPath) {
     Write-Host "✅ GitHub Desktop found!" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "❌ GitHub Desktop not found. Please install it first:" -ForegroundColor Red
     Write-Host "   https://desktop.github.com/" -ForegroundColor Yellow
     exit 1

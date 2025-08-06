@@ -32,6 +32,7 @@ All endpoints return consistent error responses:
 ```
 
 HTTP status codes used:
+
 - `200` - Success
 - `400` - Bad Request (invalid input)
 - `500` - Internal Server Error
@@ -48,6 +49,7 @@ Send a command to the Claude Code tmux session.
 **Endpoint:** `POST /api/terminal/claude/send`
 
 **Request Body:**
+
 ```json
 {
   "command": "string"
@@ -55,13 +57,16 @@ Send a command to the Claude Code tmux session.
 ```
 
 **Parameters:**
+
 - `command` (string, required): The command or message to send to Claude
 
 **Special Commands:**
+
 - `\x1b` - Sends ESC key sequence
 - Regular text - Sent as literal message to Claude
 
 **Response:**
+
 ```json
 {
   "status": "success",
@@ -71,6 +76,7 @@ Send a command to the Claude Code tmux session.
 ```
 
 **Example:**
+
 ```bash
 curl -X POST http://localhost:5000/api/terminal/claude/send \
   -H "Content-Type: application/json" \
@@ -78,6 +84,7 @@ curl -X POST http://localhost:5000/api/terminal/claude/send \
 ```
 
 **Error Responses:**
+
 - `400` - No command provided
 - `500` - Failed to send command (tmux error)
 
@@ -92,6 +99,7 @@ Retrieve the current terminal output from the Claude session.
 **Parameters:** None
 
 **Response:**
+
 ```json
 {
   "status": "success",
@@ -101,16 +109,19 @@ Retrieve the current terminal output from the Claude session.
 ```
 
 **Notes:**
+
 - Returns up to 5,000 lines of scrollback
 - ANSI escape sequences are preserved
 - Claude UI elements are filtered out server-side
 
 **Example:**
+
 ```bash
 curl http://localhost:5000/api/terminal/claude/output
 ```
 
 **Error Responses:**
+
 - `500` - Failed to capture terminal output
 - `503` - tmux session not available
 
@@ -125,6 +136,7 @@ Get information about the Claude tmux session.
 **Parameters:** None
 
 **Response:**
+
 ```json
 {
   "status": "success",
@@ -140,11 +152,13 @@ Get information about the Claude tmux session.
 ```
 
 **Fields:**
+
 - `session_exists` (boolean): Whether the tmux session is running
 - `session_name` (string): Name of the tmux session
 - `session_info` (object): Detailed session information (only if session exists)
 
 **Example:**
+
 ```bash
 curl http://localhost:5000/api/terminal/claude/status
 ```
@@ -160,6 +174,7 @@ Kill and recreate the Claude tmux session.
 **Parameters:** None
 
 **Response:**
+
 ```json
 {
   "status": "success",
@@ -169,22 +184,25 @@ Kill and recreate the Claude tmux session.
 ```
 
 **Example:**
+
 ```bash
 curl -X POST http://localhost:5000/api/terminal/claude/restart
 ```
 
 **Error Responses:**
+
 - `500` - Failed to restart session
 
 ---
 
 ## WebSocket Support (Future)
 
-*Note: WebSocket support is planned for future versions to provide real-time bidirectional communication.*
+_Note: WebSocket support is planned for future versions to provide real-time bidirectional communication._
 
 **Proposed Endpoint:** `ws://localhost:5000/api/terminal/claude/ws`
 
 **Features:**
+
 - Real-time output streaming
 - Reduced polling overhead
 - Better mobile performance
@@ -201,6 +219,7 @@ The API implements basic rate limiting to prevent abuse:
 - **Status/Restart**: 30 requests per minute per session
 
 Rate limit headers are included in responses:
+
 ```
 X-RateLimit-Limit: 10
 X-RateLimit-Remaining: 9
@@ -215,55 +234,55 @@ X-RateLimit-Reset: 1234567890
 
 ```javascript
 class ClaudeAPI {
-    constructor(baseUrl = '/api/terminal/claude') {
-        this.baseUrl = baseUrl;
+  constructor(baseUrl = "/api/terminal/claude") {
+    this.baseUrl = baseUrl;
+  }
+
+  async sendCommand(command) {
+    const response = await fetch(`${this.baseUrl}/send`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ command }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
-    
-    async sendCommand(command) {
-        const response = await fetch(`${this.baseUrl}/send`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ command })
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-        
-        return await response.json();
+
+    return await response.json();
+  }
+
+  async getOutput() {
+    const response = await fetch(`${this.baseUrl}/output`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
-    
-    async getOutput() {
-        const response = await fetch(`${this.baseUrl}/output`);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-        
-        return await response.json();
+
+    return await response.json();
+  }
+
+  async getStatus() {
+    const response = await fetch(`${this.baseUrl}/status`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
-    
-    async getStatus() {
-        const response = await fetch(`${this.baseUrl}/status`);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-        
-        return await response.json();
+
+    return await response.json();
+  }
+
+  async restart() {
+    const response = await fetch(`${this.baseUrl}/restart`, {
+      method: "POST",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
-    
-    async restart() {
-        const response = await fetch(`${this.baseUrl}/restart`, {
-            method: 'POST'
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-        
-        return await response.json();
-    }
+
+    return await response.json();
+  }
 }
 ```
 
@@ -276,7 +295,7 @@ class ClaudeTerminalClient:
     def __init__(self, base_url='http://localhost:5000/api/terminal/claude'):
         self.base_url = base_url
         self.session = requests.Session()
-    
+
     def send_command(self, command):
         response = self.session.post(
             f'{self.base_url}/send',
@@ -284,17 +303,17 @@ class ClaudeTerminalClient:
         )
         response.raise_for_status()
         return response.json()
-    
+
     def get_output(self):
         response = self.session.get(f'{self.base_url}/output')
         response.raise_for_status()
         return response.json()
-    
+
     def get_status(self):
         response = self.session.get(f'{self.base_url}/status')
         response.raise_for_status()
         return response.json()
-    
+
     def restart(self):
         response = self.session.post(f'{self.base_url}/restart')
         response.raise_for_status()
@@ -377,6 +396,7 @@ A simple health check endpoint for monitoring:
 **Endpoint:** `GET /health`
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -410,16 +430,19 @@ When running in debug mode (`FLASK_DEBUG=true`), additional information is inclu
 ## Security Considerations
 
 ### Input Validation
+
 - Commands are limited to 10,000 characters
 - HTML escaping applied to prevent XSS
 - No shell command injection (uses tmux literal mode)
 
 ### Access Control
+
 - API accessible only from same origin by default
 - CORS can be configured for development
 - Rate limiting prevents abuse
 
 ### Data Privacy
+
 - No persistent logging of commands by default
 - Session data stored only in tmux memory
 - No external API calls without explicit consent

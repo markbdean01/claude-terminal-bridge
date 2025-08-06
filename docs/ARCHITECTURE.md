@@ -89,6 +89,7 @@ Preserve scroll position
 ### Backend Components
 
 #### Flask Application (`backend/app.py`)
+
 - **Framework**: Flask with CORS support
 - **Static Files**: Serves frontend assets
 - **Route Registration**: API blueprint integration
@@ -96,6 +97,7 @@ Preserve scroll position
 - **Configuration**: Environment-based settings
 
 #### Terminal API (`backend/claude_terminal_api.py`)
+
 - **Session Management**: tmux session lifecycle
 - **Command Processing**: Safe command transmission
 - **Output Capture**: Terminal content retrieval
@@ -103,12 +105,14 @@ Preserve scroll position
 - **Error Recovery**: Automatic session recreation
 
 #### Configuration (`backend/config.py`)
+
 - **Environment Variables**: Flexible configuration
 - **Default Values**: Sensible fallbacks
 - **Session Settings**: tmux and Claude parameters
 - **Security Settings**: Production-ready defaults
 
 #### Utilities (`backend/utils.py`)
+
 - **System Checks**: Dependency validation
 - **Content Filtering**: Claude UI element removal
 - **ANSI Processing**: Color code handling
@@ -117,12 +121,14 @@ Preserve scroll position
 ### Frontend Components
 
 #### HTML Structure (`frontend/index.html`)
+
 - **PWA Manifest**: Mobile app integration
 - **Responsive Design**: Cross-device compatibility
 - **Accessibility**: ARIA labels and focus management
 - **SEO Optimization**: Meta tags and structured data
 
 #### Styling (`frontend/css/style.css`)
+
 - **Mobile-First**: Touch-optimized interface
 - **ANSI Colors**: Complete 256-color support
 - **Dark Theme**: Terminal-appropriate aesthetics
@@ -130,6 +136,7 @@ Preserve scroll position
 - **iOS Optimizations**: PWA-specific enhancements
 
 #### JavaScript Logic (`frontend/js/app.js`)
+
 - **Terminal Class**: Main application logic
 - **Event Handling**: User interaction management
 - **Polling System**: Real-time update mechanism
@@ -137,12 +144,14 @@ Preserve scroll position
 - **Mobile Detection**: Platform-specific optimizations
 
 #### ANSI Parser (`frontend/js/ansi-parser.js`)
+
 - **Color Mapping**: ANSI code to CSS classes
 - **HTML Escaping**: Security and safety
 - **Format Preservation**: Bold, italic, underline
 - **Performance**: Efficient parsing algorithms
 
 #### Configuration (`frontend/js/config.js`)
+
 - **Settings**: Configurable parameters
 - **Platform Detection**: Mobile/desktop/PWA
 - **Storage Keys**: LocalStorage management
@@ -151,18 +160,21 @@ Preserve scroll position
 ## Security Architecture
 
 ### Input Validation
+
 - **Command Sanitization**: Length and content limits
 - **HTML Escaping**: XSS prevention in terminal output
 - **ANSI Safety**: Safe parsing without code execution
 - **Rate Limiting**: Protection against abuse
 
 ### Process Isolation
+
 - **tmux Sessions**: Separate process space
 - **User Permissions**: Non-root execution
 - **File System**: Restricted access patterns
 - **Network**: Localhost-only by default
 
 ### Authentication
+
 - **Session Management**: Flask session handling
 - **CSRF Protection**: Token-based validation
 - **API Security**: Request validation
@@ -171,18 +183,21 @@ Preserve scroll position
 ## Performance Architecture
 
 ### Frontend Optimizations
+
 - **Polling Strategy**: Adaptive frequency
 - **DOM Updates**: Minimal and batched changes
 - **Memory Management**: Garbage collection awareness
 - **Mobile Performance**: Touch and scroll optimization
 
 ### Backend Optimizations
+
 - **Process Reuse**: tmux session persistence
 - **Caching**: Content comparison for updates
 - **Resource Limits**: Memory and CPU bounds
 - **Connection Pooling**: Efficient resource usage
 
 ### Network Optimizations
+
 - **Compression**: gzip content encoding
 - **Caching Headers**: Browser cache control
 - **Minimal Payloads**: JSON optimization
@@ -191,18 +206,21 @@ Preserve scroll position
 ## Deployment Architecture
 
 ### Development
+
 - **Local Server**: Flask development server
 - **Hot Reload**: Automatic code updates
 - **Debug Mode**: Enhanced error information
 - **CORS**: Cross-origin development support
 
 ### Production
+
 - **WSGI Server**: Gunicorn or similar
 - **Reverse Proxy**: Nginx configuration
 - **SSL/TLS**: HTTPS encryption
 - **Process Management**: Systemd service
 
 ### Container Deployment
+
 - **Docker**: Containerized deployment
 - **Multi-stage**: Optimized image builds
 - **Health Checks**: Container monitoring
@@ -211,18 +229,21 @@ Preserve scroll position
 ## Mobile Architecture
 
 ### Progressive Web App (PWA)
+
 - **Manifest**: App installation metadata
 - **Service Worker**: Offline functionality
 - **App Shell**: Fast initial loading
 - **Background Sync**: Offline command queuing
 
 ### iOS Optimizations
+
 - **Viewport Handling**: Proper scaling
 - **Touch Events**: Native-like interactions
 - **Status Bar**: Seamless integration
 - **Home Screen**: App icon and launch
 
 ### Android Optimizations
+
 - **Material Design**: Platform consistency
 - **Notification**: System integration
 - **Intent Handling**: Deep linking
@@ -231,12 +252,14 @@ Preserve scroll position
 ## Scalability Considerations
 
 ### Horizontal Scaling
+
 - **Load Balancing**: Multiple Flask instances
 - **Session Affinity**: Sticky sessions for tmux
 - **Database**: Optional session storage
 - **Caching**: Redis for shared state
 
 ### Vertical Scaling
+
 - **Resource Monitoring**: CPU and memory tracking
 - **Auto-scaling**: Dynamic resource allocation
 - **Performance Tuning**: Optimization strategies
@@ -245,18 +268,21 @@ Preserve scroll position
 ## Monitoring and Observability
 
 ### Logging
+
 - **Structured Logs**: JSON formatting
 - **Log Levels**: Appropriate verbosity
 - **Log Rotation**: Size and time-based
 - **Centralized**: Log aggregation systems
 
 ### Metrics
+
 - **Performance**: Response times and throughput
 - **Errors**: Error rates and types
 - **Usage**: User behavior and patterns
 - **Resources**: System utilization
 
 ### Health Checks
+
 - **Endpoint**: `/health` status check
 - **Dependencies**: tmux and Claude availability
 - **Database**: Connection validation
