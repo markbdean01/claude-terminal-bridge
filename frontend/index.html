@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Claude Terminal">
+    <meta name="theme-color" content="#1e1e1e">
+    <meta name="description" content="Web-based terminal for Claude Code with mobile PWA support">
+    
+    <title>Claude Code Terminal</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header with menu button, title, font controls, and status -->
+    <div id="header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <button class="menu-btn" onclick="openMenu()" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-title">Claude Code Terminal</div>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <button class="font-btn" onclick="adjustFontSize(-1)" aria-label="Decrease font size">A-</button>
+            <button class="font-btn" onclick="adjustFontSize(1)" aria-label="Increase font size">A+</button>
+            <div class="status" id="status">Connecting...</div>
+        </div>
+    </div>
+    
+    <!-- Terminal output container -->
+    <div id="terminal-container">
+        <div id="terminal-output"></div>
+        <div id="loading-indicator" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Loading...
+        </div>
+    </div>
+    
+    <!-- Input controls -->
+    <div id="input-container">
+        <input type="text" 
+               id="command-input" 
+               placeholder="Message Claude..." 
+               autocomplete="off" 
+               autocorrect="off" 
+               autocapitalize="off" 
+               spellcheck="false" 
+               enterkeyhint="send"
+               aria-label="Command input">
+        <button class="escape-btn" onclick="sendEscape()" aria-label="Send escape key">ESC</button>
+        <button class="send-btn" onclick="sendCommand()" aria-label="Send command">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+    
+    <!-- Side drawer menu (hidden by default) -->
+    <div id="menu-overlay" onclick="closeMenu()"></div>
+    <nav id="side-menu">
+        <div class="menu-header">
+            <h3>Claude Terminal</h3>
+            <button onclick="closeMenu()" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="menu-content">
+            <div class="menu-section">
+                <h4>Terminal Controls</h4>
+                <button onclick="restartSession()" class="menu-item">
+                    <i class="fas fa-refresh"></i> Restart Session
+                </button>
+                <button onclick="clearTerminal()" class="menu-item">
+                    <i class="fas fa-eraser"></i> Clear Display
+                </button>
+                <button onclick="getSessionStatus()" class="menu-item">
+                    <i class="fas fa-info-circle"></i> Session Status
+                </button>
+            </div>
+            
+            <div class="menu-section">
+                <h4>Settings</h4>
+                <div class="setting-item">
+                    <label for="auto-scroll">Auto-scroll</label>
+                    <input type="checkbox" id="auto-scroll" checked>
+                </div>
+                <div class="setting-item">
+                    <label for="sound-enabled">Sound notifications</label>
+                    <input type="checkbox" id="sound-enabled">
+                </div>
+            </div>
+            
+            <div class="menu-section">
+                <h4>About</h4>
+                <div class="about-text">
+                    <p>Claude Terminal Bridge v1.0</p>
+                    <p>Mobile-optimized terminal interface for Claude Code</p>
+                    <p><a href="https://github.com/yourusername/claude-terminal-bridge" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> GitHub Repository
+                    </a></p>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Connection status toast -->
+    <div id="connection-toast" style="display: none;">
+        <i class="fas fa-wifi"></i>
+        <span id="toast-message">Reconnecting...</span>
+    </div>
+    
+    <!-- JavaScript files -->
+    <script src="/js/config.js"></script>
+    <script src="/js/ansi-parser.js"></script>
+    <script src="/js/app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

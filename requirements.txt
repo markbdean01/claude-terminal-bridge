@@ -1,0 +1,37 @@
+# Claude Terminal Bridge - Python Dependencies
+
+# Core Flask framework
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# CORS support for development
+Flask-CORS==4.0.0
+
+# Process and system interaction
+psutil==5.9.5
+
+# JSON handling (included in Python standard library, but listed for clarity)
+# json
+
+# Additional utilities
+click==8.1.7
+itsdangerous==2.1.2
+Jinja2==3.1.2
+MarkupSafe==2.1.3
+
+# Development dependencies (optional)
+# pytest==7.4.2
+# pytest-flask==1.3.0
+# black==23.9.1
+# flake8==6.1.0
+
+# Production server (optional - for deployment)
+# gunicorn==21.2.0
+# gevent==23.7.0
+
+# Security (optional - for enhanced security)
+# cryptography==41.0.4
+# bcrypt==4.0.1
+
+# Logging (optional - enhanced logging)
+# python-json-logger==2.0.7

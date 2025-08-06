@@ -1,0 +1,609 @@
+/* Claude Terminal Bridge - Complete Stylesheet */
+
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+/* Header styling */
+#header {
+    background: linear-gradient(135deg, #2d2d2d 0%, #262626 100%);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+    min-height: 60px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.header-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Button styles */
+.menu-btn, .font-btn, .escape-btn, .send-btn {
+    background: #404040;
+    border: 1px solid #555;
+    color: #d4d4d4;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-btn:hover, .font-btn:hover {
+    background: #4a4a4a;
+    border-color: #666;
+}
+
+.menu-btn:active, .font-btn:active {
+    background: #3a3a3a;
+    transform: translateY(1px);
+}
+
+.menu-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+}
+
+.font-btn {
+    min-width: 36px;
+    height: 36px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Status indicator */
+.status {
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #444;
+    color: #999;
+    border: 1px solid #555;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #666;
+    display: inline-block;
+}
+
+.status.connected {
+    background: #0d6e0d;
+    color: #90ee90;
+    border-color: #0f7b0f;
+}
+
+.status.connected::before {
+    background: #00ff00;
+    box-shadow: 0 0 6px #00ff00;
+}
+
+.status.error {
+    background: #8b0000;
+    color: #ffcccb;
+    border-color: #a00000;
+}
+
+.status.error::before {
+    background: #ff0000;
+    box-shadow: 0 0 6px #ff0000;
+}
+
+/* Terminal container - critical for scrolling */
+#terminal-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    background: #1e1e1e;
+    position: relative;
+    min-height: 0;
+    scroll-behavior: smooth;
+}
+
+/* Terminal output styling */
+#terminal-output {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 16px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+    min-height: 100%;
+    color: #d4d4d4;
+}
+
+/* Loading indicator */
+#loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #888;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Input container */
+#input-container {
+    background: linear-gradient(135deg, #2d2d2d 0%, #262626 100%);
+    padding: 12px 16px;
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid #444;
+    min-height: 64px;
+    align-items: center;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+}
+
+#command-input {
+    flex: 1;
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 16px; /* Prevents iOS zoom */
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+#command-input:focus {
+    border-color: #007acc;
+    box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+    background: #363636;
+}
+
+#command-input::placeholder {
+    color: #888;
+}
+
+.escape-btn {
+    background: #dc3545;
+    border-color: #c82333;
+    color: white;
+    min-width: 50px;
+    height: 44px;
+    font-weight: bold;
+}
+
+.escape-btn:hover {
+    background: #c82333;
+    border-color: #bd2130;
+}
+
+.escape-btn:active {
+    background: #bd2130;
+    transform: translateY(1px);
+}
+
+.send-btn {
+    background: #007acc;
+    border-color: #0066a3;
+    color: white;
+    min-width: 50px;
+    height: 44px;
+}
+
+.send-btn:hover {
+    background: #0066a3;
+    border-color: #005580;
+}
+
+.send-btn:active {
+    background: #005580;
+    transform: translateY(1px);
+}
+
+/* Side menu styling */
+#menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+#menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#side-menu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100%;
+    background: #2d2d2d;
+    border-right: 1px solid #444;
+    z-index: 1001;
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#side-menu.active {
+    left: 0;
+}
+
+.menu-header {
+    background: #333;
+    padding: 20px;
+    border-bottom: 1px solid #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-header h3 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0;
+}
+
+.menu-header button {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.menu-header button:hover {
+    background: #444;
+}
+
+.menu-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.menu-section {
+    margin-bottom: 30px;
+}
+
+.menu-section h4 {
+    color: #ccc;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.menu-item {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #d4d4d4;
+    padding: 12px 16px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.menu-item:hover {
+    background: #3a3a3a;
+}
+
+.menu-item i {
+    width: 16px;
+    color: #888;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item label {
+    color: #d4d4d4;
+    font-size: 14px;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #007acc;
+}
+
+.about-text {
+    color: #999;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.about-text p {
+    margin-bottom: 8px;
+}
+
+.about-text a {
+    color: #007acc;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.about-text a:hover {
+    text-decoration: underline;
+}
+
+/* Connection toast */
+#connection-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 24px;
+    border: 1px solid #555;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+/* ANSI color classes */
+.ansi-black { color: #555555; }
+.ansi-red { color: #ff5555; }
+.ansi-green { color: #50fa7b; }
+.ansi-yellow { color: #f1fa8c; }
+.ansi-blue { color: #8be9fd; }
+.ansi-magenta { color: #ff79c6; }
+.ansi-cyan { color: #8be9fd; }
+.ansi-white { color: #f8f8f2; }
+
+.ansi-bright-black { color: #6272a4; }
+.ansi-bright-red { color: #ff6e6e; }
+.ansi-bright-green { color: #69ff94; }
+.ansi-bright-yellow { color: #ffffa5; }
+.ansi-bright-blue { color: #d6acff; }
+.ansi-bright-magenta { color: #ff92df; }
+.ansi-bright-cyan { color: #a4ffff; }
+.ansi-bright-white { color: #ffffff; }
+
+/* Background colors */
+.ansi-bg-black { background-color: #000000; }
+.ansi-bg-red { background-color: #800000; }
+.ansi-bg-green { background-color: #008000; }
+.ansi-bg-yellow { background-color: #808000; }
+.ansi-bg-blue { background-color: #000080; }
+.ansi-bg-magenta { background-color: #800080; }
+.ansi-bg-cyan { background-color: #008080; }
+.ansi-bg-white { background-color: #c0c0c0; }
+
+/* Text formatting */
+.ansi-bold { font-weight: bold; }
+.ansi-dim { opacity: 0.7; }
+.ansi-italic { font-style: italic; }
+.ansi-underline { text-decoration: underline; }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #header {
+        padding: 10px 12px;
+        min-height: 56px;
+    }
+    
+    .header-title {
+        font-size: 14px;
+    }
+    
+    .font-btn {
+        min-width: 32px;
+        height: 32px;
+        font-size: 11px;
+    }
+    
+    #terminal-output {
+        padding: 12px;
+        font-size: 13px;
+    }
+    
+    #input-container {
+        padding: 10px 12px;
+        min-height: 60px;
+        gap: 10px;
+    }
+    
+    #command-input {
+        padding: 10px 14px;
+        font-size: 16px; /* Prevents iOS zoom */
+    }
+    
+    .escape-btn, .send-btn {
+        min-width: 44px;
+        height: 40px;
+    }
+    
+    #side-menu {
+        width: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    #side-menu {
+        width: 100%;
+        left: -100%;
+    }
+    
+    .header-title {
+        display: none;
+    }
+    
+    #terminal-output {
+        font-size: 12px;
+        padding: 10px;
+    }
+}
+
+/* Animations */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.fa-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* iOS specific optimizations */
+@supports (-webkit-touch-callout: none) {
+    #terminal-container {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #command-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        -webkit-appearance: none;
+        border-radius: 8px;
+    }
+    
+    button {
+        -webkit-appearance: none;
+        -webkit-touch-callout: none;
+    }
+}
+
+/* Dark mode improvements */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
+
+/* Print styles */
+@media print {
+    #header, #input-container, #side-menu {
+        display: none;
+    }
+    
+    #terminal-container {
+        overflow: visible;
+        height: auto;
+    }
+    
+    #terminal-output {
+        color: black;
+        background: white;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+button:focus, input:focus {
+    outline: 2px solid #007acc;
+    outline-offset: 2px;
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+    .status {
+        border-width: 2px;
+    }
+    
+    #command-input {
+        border-width: 2px;
+    }
+    
+    button {
+        border-width: 2px;
+    }
+}

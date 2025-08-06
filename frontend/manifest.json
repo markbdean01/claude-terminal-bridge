@@ -1,0 +1,125 @@
+{
+  "name": "Claude Terminal Bridge",
+  "short_name": "Claude Terminal",
+  "description": "Web-based terminal for Claude Code with mobile PWA support",
+  "version": "1.0.0",
+  "start_url": "/terminal",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#1e1e1e",
+  "background_color": "#1e1e1e",
+  "scope": "/",
+  "categories": [
+    "developer",
+    "productivity",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Terminal",
+      "short_name": "Terminal",
+      "description": "Open Claude terminal interface",
+      "url": "/terminal",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "features": [
+    "Real-time terminal updates",
+    "ANSI color support",
+    "Touch-optimized interface",
+    "Offline capability",
+    "Font size adjustment",
+    "Session persistence"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/terminal-mobile.png",
+      "sizes": "375x812",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Claude Terminal on iPhone"
+    },
+    {
+      "src": "/screenshots/terminal-desktop.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Claude Terminal on Desktop"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "claude",
+      "url": "/terminal?command=%s"
+    }
+  ]
+}
