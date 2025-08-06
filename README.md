@@ -23,7 +23,7 @@
 
 1. **Point Claude Code at this repository** and say: *"Use this codebase to create a terminal environment that works for my workflow and development style"*
 
-2. **Or even simpler** - just use the included `CLAUDE_TERMINAL_BRIDGE_COMPLETE_SPECIFICATION.md` and tell your coding agent: *"Build this entire application for me based on this specification"*
+2. **Or even simpler** - just use the included `CLAUDE_TERMINAL_BRIDGE_SPECIFICATION.md` and tell your coding agent: *"Build this entire application for me based on this specification"*
 
 3. **The magic happens** - Claude Code will analyze the architecture and build a customized version that fits your exact needs
 
@@ -347,8 +347,7 @@ CLAUDE_COMMAND = "claude -c --dangerously-skip-permissions"
 claude-terminal-bridge/
 ├── README.md                              # This comprehensive guide
 ├── requirements.txt                       # Python dependencies
-├── CLAUDE_TERMINAL_BRIDGE_COMPLETE_SPECIFICATION.md  # Full specification
-├── UPDATE_SUMMARY.md                      # Recent changes summary  
+├── CLAUDE_TERMINAL_BRIDGE_SPECIFICATION.md  # Technical specification
 ├── .gitignore                            # Git ignore rules
 ├── LICENSE                               # MIT license
 ├── backend/
