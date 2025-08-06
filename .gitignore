@@ -174,3 +174,21 @@ secrets/
 *_secret
 *_key
 api_keys.txt
+
+# Development/spec story files (internal only)
+.specstory/
+spec-story/
+.vscode/
+.cursor/
+
+# Personal notes and drafts
+notes/
+drafts/
+TODO.md
+NOTES.md
+*.draft
+
+# Local development files
+.dev/
+dev/
+local/
