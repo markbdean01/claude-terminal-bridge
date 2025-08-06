@@ -185,7 +185,7 @@ python backend/app.py
                ▼                             ▼
 ┌─────────────────────────┐    ┌─────────────────────────┐
 │ iPhone (You)            │    │ Any Browser Anywhere    │
-│ Via Tailscale VPN      │    │ Via Tailscale VPN      │
+│ Via Tailscale VPN       │    │ Via Tailscale VPN       │
 │                         │    │                         │
 │ ┌─────────────────────┐ │    │ ┌─────────────────────┐ │
 │ │ Terminal Bridge     │ │    │ │ Auto-built Apps     │ │
@@ -216,7 +216,7 @@ python backend/app.py
 │                                                             │
 │ ┌─────────────────┐    ┌─────────────────────────────────┐ │
 │ │ claude-session  │    │ Claude Code CLI                 │ │
-│ │ 50K history     │ <> │ claude -c --dangerously-skip-  │ │
+│ │ 50K history     │ <> │ claude -c --dangerously-skip-   │ │
 │ │ ANSI colors     │    │ permissions                     │ │
 │ └─────────────────┘    └─────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────┘
